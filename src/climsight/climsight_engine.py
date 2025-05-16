@@ -585,7 +585,8 @@ def direct_llm_request(content_message, input_params, config, api_key, stream_ha
 
     logger.debug(f"start ChatOpenAI, LLMChain ")                 
     llm = ChatOpenAI(
-        openai_api_key=api_key,
+        openai_api_key='EMPTY' if config['model_backend'] == 'vllm' else api_key,
+        base_url=config['model_base_url'],
         model_name=config['model_name'],
         streaming=True,
         callbacks=[stream_handler],
